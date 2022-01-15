@@ -1,0 +1,24 @@
+{
+  "name": "fragments",
+  "private": true,
+  "version": "0.0.1",
+  "description": "CCP555 - Fragments back-end API Server",
+  "main": "index.js",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pyke-dot/fragments.git"
+  },
+  "keywords": [],
+  "author": "Tecca Yu",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/Pyke-dot/fragments/issues"
+  },
+  "homepage": "https://github.com/Pyke-dot/fragments#readme"
+}
