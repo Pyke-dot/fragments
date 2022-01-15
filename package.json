@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Pyke-dot/fragments/issues"
   },
-  "homepage": "https://github.com/Pyke-dot/fragments#readme"
+  "homepage": "https://github.com/Pyke-dot/fragments#readme",
+  "devDependencies": {
+    "prettier": "2.5.1"
+  }
 }
