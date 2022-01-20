@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 
 // version and author from our package.json file
-const { version, author } = require('../package.json');
+//const { version, author } = require('../package.json');
 
 const logger = require('./logger');
 const pino = require('pino-http')({
@@ -26,12 +26,18 @@ app.use(helmet());
 // Use CORS middleware so we can make requests across origins
 app.use(cors());
 
+// modifications to src/app.js
+
+const passport = require('passport');
+
+const authorization = require('./authorization');
+
 // Use gzip/deflate compression middleware
 app.use(compression());
 
-// modifications to src/app.js
-
-// Remove `app.get('/', (req, res) => {...});` and replace with:
+// Set up our passport authorization middleware
+passport.use(authorization.strategy());
+app.use(passport.initialize());
 
 // Define our routes
 app.use('/', require('./routes'));
