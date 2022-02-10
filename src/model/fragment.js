@@ -2,7 +2,6 @@
 const { nanoid } = require('nanoid');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
-const logger = require('../logger');
 
 // Functions for working with fragment metadata/data using our DB
 const {
@@ -41,8 +40,16 @@ class Fragment {
       this.size = size;
     }
 
-    this.created = new Date().toISOString();
-    this.updated = new Date().toISOString();
+    if (created) {
+      this.created = created;
+    } else {
+      this.created = new Date().toISOString();
+    }
+    if (updated) {
+      this.updated = updated;
+    } else {
+      this.updated = new Date().toISOString();
+    }
   }
 
   /**
