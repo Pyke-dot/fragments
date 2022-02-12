@@ -1,7 +1,6 @@
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
-const e = require('express');
-const { readFragment, readFragmentData } = require('../../model/data');
+const { readFragmentData } = require('../../model/data');
 
 // src/routes/api/get.js
 
