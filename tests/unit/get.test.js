@@ -56,5 +56,6 @@ describe('GET /v1/fragments', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(res.body.fragments).toBe('hello');
+    console.log(res.body.fragments);
   });
 });
