@@ -18,7 +18,6 @@ describe('test memory data provider', () => {
     await writeFragmentData('234', '1', 'This is fragment 1 (data)');
 
     const data = await readFragmentData('234', '1');
-    console.log(data);
     expect(data).toEqual('This is fragment 1 (data)');
     expect(() => readFragmentData('234', '444').expect.toThrow());
   });

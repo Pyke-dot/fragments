@@ -83,10 +83,10 @@ describe('Fragment class', () => {
       const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 1 });
       expect(fragment.id).toMatch(/[A-Za-z0-9_-]+/);
     });
-    // test('fragments have an ownerId', () => {
-    //   const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 1 });
-    //   expect(fragment.ownerId).toEqual('1234');
-    // });
+    test('fragments have an ownerId', () => {
+      const fragment = new Fragment({ ownerId: '1234', type: 'text/plain', size: 1 });
+      expect(fragment.ownerId).toEqual('1234');
+    });
     test('fragments use id passed in if present', () => {
       const fragment = new Fragment({
         id: 'id',
@@ -182,6 +182,8 @@ describe('Fragment class', () => {
 
       const fragment2 = await Fragment.byId('1234', fragment.id);
       expect(fragment2).toEqual(fragment);
+      console.log(data);
+      console.log(await fragment2.getData());
       expect(await fragment2.getData()).toEqual(data);
     });
 
