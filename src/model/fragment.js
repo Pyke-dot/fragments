@@ -109,7 +109,6 @@ class Fragment {
    * @returns Promise<Buffer>
    */
   getData() {
-    // TODO
     try {
       return new Promise((resolve, reject) => {
         readFragmentData(this.ownerId, this.id)
