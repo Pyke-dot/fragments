@@ -28,7 +28,7 @@ class Fragment {
       throw new Error();
     }
 
-    if (typeof type === 'string' && (type == 'text/plain; charset=utf-8' || type == 'text/plain')) {
+    if (Fragment.isSupportedType(type)) {
       this.type = type;
     } else {
       throw new Error();
@@ -62,7 +62,10 @@ class Fragment {
     // TODO
     try {
       const fragments = await listFragments(ownerId, expand);
-      return expand ? fragments.map((fragment) => new Fragment(fragment)) : fragments;
+      if (expand) {
+        return fragments.map((fragment) => new Fragment(fragment));
+      }
+      return fragments;
     } catch (err) {
       return [];
     }
@@ -90,7 +93,6 @@ class Fragment {
    */
   static delete(ownerId, id) {
     // TODO
-
     return deleteFragment(ownerId, id);
   }
 
@@ -154,7 +156,7 @@ class Fragment {
    */
   get isText() {
     // TODO
-    let result = this.mimeType == 'text/plain';
+    let result = this.mimeType.startsWith('text/');
 
     return result;
   }
@@ -180,6 +182,8 @@ class Fragment {
     let result;
 
     if (value == 'text/plain' || value == 'text/plain; charset=utf-8') {
+      result = true;
+    } else if (value == 'text/markdown' || value == 'application/json' || value == 'text/html') {
       result = true;
     } else {
       result = false;
