@@ -1,14 +1,35 @@
 # fragments
 
-CCP555 - API Server
+CCP555 - this developing project uses Node.js and express module to host an API Server along with AWS Cognito, at this time it takes requests from /GET /POST.
 
-npm run lint - runs check on coding style and problems
 
-npm start - to start the server
+# To Run
+```npm i```- installs necessary dependencies for running locally
 
-npm run dev - LOG_LEVEL=debug nodemon 
+```npm start``` - to start running the server at `node src/index.js`
 
-npm run debug - LOG_LEVEL=debug nodemon 
+```npm run lint ```- runs check on coding style and problems
 
-prettier setup - .prettierrc
-eslint setup - .eslintrc.js
+When the server started successfully on `localhost:8080` with an health check and the logger message should show that `Server started` and `Cognito JWKS cached`.
+# To Test
+```npm run dev ``` - run the server in development mode
+
+```npm run debug ``` - runs the server in debug mode
+
+`nodemon` is configured and will keep monitorning for code changes and restarting the server.
+
+# dependency setups & formatter
+
+`prettier` setup in `.prettierrc`
+
+`eslint` setup in `.eslintrc.js` run `npm run lint` to detect formatting issues.
+
+`Hadolint` used for this project to format the Dockerfile. 
+Run `Hadolint Dockerfile` to format the Dockerfile.
+# Docker image
+
+This project is dockerized, image resides in Dockerhub: [teccayu/fragments](https://hub.docker.com/r/teccayu/fragments/tags)
+
+OR simply run 
+
+```docker pull teccayu/fragments:latest```
