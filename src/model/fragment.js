@@ -78,7 +78,11 @@ class Fragment {
    */
   static async byId(ownerId, id) {
     logger.info({ ownerId, id }, 'byId()');
-    return new Fragment(await readFragment(ownerId, id));
+    try {
+      return new Fragment(await readFragment(ownerId, id));
+    } catch (error) {
+      throw new Error('unable to find fragment by that id');
+    }
   }
 
   /**
