@@ -2,7 +2,7 @@
 const { nanoid } = require('nanoid');
 // Use https://www.npmjs.com/package/content-type to create/parse Content-Type headers
 const contentType = require('content-type');
-
+const logger = require('../logger');
 // Functions for working with fragment metadata/data using our DB
 const {
   readFragment,
@@ -77,12 +77,8 @@ class Fragment {
    * @returns Promise<Fragment>
    */
   static async byId(ownerId, id) {
-    // TODO
-    if ((await this.byUser(ownerId)).includes(id)) {
-      return new Fragment(await readFragment(ownerId, id));
-    } else {
-      throw new Error('no such fragment');
-    }
+    logger.info({ ownerId, id }, 'byId()');
+    return new Fragment(await readFragment(ownerId, id));
   }
 
   /**
