@@ -1,6 +1,5 @@
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
-const { readFragmentData, getData } = require('../../model/data');
 const logger = require('../../logger');
 require('dotenv').config();
 var MarkdownIt = require('markdown-it'),
