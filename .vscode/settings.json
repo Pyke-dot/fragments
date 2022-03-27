@@ -9,5 +9,5 @@
   },
   "files.eol": "\n",
   "files.insertFinalNewline": true,
-  "cSpell.words": ["HTPASSWD"]
+  "cSpell.words": ["cacheable", "HTPASSWD", "jsonpath"]
 }
