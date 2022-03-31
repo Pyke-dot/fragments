@@ -1,8 +1,6 @@
 const hash = require('../../src/hash');
 const request = require('supertest');
 const app = require('../../src/app');
-const { readFragmentData, readFragment, listFragments } = require('../../src/model/data');
-const { Fragment } = require('../../src/model/fragment');
 
 describe('Delete /v1/fragments', () => {
   test('unauthenticated requests are denied', () => request(app).get('/v1/fragments').expect(401));
