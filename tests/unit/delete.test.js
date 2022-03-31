@@ -1,4 +1,3 @@
-const hash = require('../../src/hash');
 const request = require('supertest');
 const app = require('../../src/app');
 
