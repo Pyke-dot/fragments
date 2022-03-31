@@ -92,7 +92,6 @@ class Fragment {
    * @returns Promise
    */
   static delete(ownerId, id) {
-    // TODO
     return deleteFragment(ownerId, id);
   }
 
@@ -188,7 +187,6 @@ class Fragment {
     } else {
       result = false;
     }
-
     return result;
   }
 }
