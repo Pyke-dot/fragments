@@ -43,7 +43,6 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           # Hard-code our region, which isn't a secret, and won't change
           aws-region: us-east-1
-
       # Login to our ECR repository using the configured credentials
       - name: Login to Amazon ECR
         id: login-ecr
