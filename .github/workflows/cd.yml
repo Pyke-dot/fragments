@@ -82,8 +82,7 @@ jobs:
           DOCKER_REPO: ${{ steps.login-ecr.outputs.registry }}/fragments
           DOCKER_TAG: ${{ github.ref_name }}
           COMPOSE_FILE: deploy-${{ github.ref_name }}.yml
-        run: |
-          envsubst < docker-compose.yml > ${{ env.COMPOSE_FILE }}
+        run: envsubst < docker-compose.yml > ${{ env.COMPOSE_FILE }}
           echo "Created ${{ env.COMPOSE_FILE }}"
       # Deploy our custom compose file to our Elastic Beanstalk environment
       - name: Deploy to Elastic Beanstalk
