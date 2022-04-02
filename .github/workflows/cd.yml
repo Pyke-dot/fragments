@@ -61,8 +61,8 @@ jobs:
           # if we have to test or debug something. Second, we'll also replace the
           # `latest` tag, since this is our most up-to-date version.
           VERSION_TAG: ${{ github.ref_name }}
-          uses: docker/build-push-action@v2
-          with:
+        uses: docker/build-push-action@v2
+        with:
           push: true
           # Use the git tag version and `latest`
           tags: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPO }}:${{ env.VERSION_TAG }}, ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPO }}:latest
@@ -82,7 +82,8 @@ jobs:
           DOCKER_REPO: ${{ steps.login-ecr.outputs.registry }}/fragments
           DOCKER_TAG: ${{ github.ref_name }}
           COMPOSE_FILE: deploy-${{ github.ref_name }}.yml
-        run: envsubst < docker-compose.yml > ${{ env.COMPOSE_FILE }}
+        run: |
+          envsubst < docker-compose.yml > ${{ env.COMPOSE_FILE }}
           echo "Created ${{ env.COMPOSE_FILE }}"
       # Deploy our custom compose file to our Elastic Beanstalk environment
       - name: Deploy to Elastic Beanstalk
