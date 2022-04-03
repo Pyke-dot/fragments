@@ -18,3 +18,4 @@ services:
       - HTPASSWD
       # The S3 Bucket to use
       - AWS_S3_BUCKET_NAME
+      - API_URL
