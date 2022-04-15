@@ -3,8 +3,6 @@ const { Fragment } = require('../../model/fragment');
 const logger = require('../../logger');
 
 module.exports = async (req, res) => {
-  // TODO: this is just a placeholder to get something working...
-
   if (req.params.id) {
     try {
       await Fragment.delete(req.user, req.params.id);
