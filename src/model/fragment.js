@@ -219,17 +219,35 @@ class Fragment {
    * @param {string} value a convert type value
    * @returns result
    */
+  // async txtConvert(value) {
+  //   var result, fragData;
+  //   fragData = await this.getData();
+  //   if (value == 'html' && this.type != 'text/html') {
+  //     if (this.type == 'text/markdown') {
+  //       result = md.render(fragData.toString());
+  //     }
+  //   } else if (this.type == 'application/json' && value == 'plain') {
+  //     result = JSON.parse(fragData);
+  //   } else if (this.type == 'text/html' && value == 'plain') {
+  //     result = fragData;
+  //   } else if (value != 'md' && this.type != 'text/plain') {
+  //     result = fragData;
+  //   }
+  //   return result;
+  // }
   async txtConvert(value) {
     var result, fragData;
     fragData = await this.getData();
-    if (value == 'html' && this.type != 'text/html') {
-      if (this.type == 'text/markdown') {
+    if (value == 'plain') {
+      if (this.type == 'application/json') {
+        result = JSON.parse(fragData);
+      } else {
+        result = fragData;
+      }
+    } else if (value == 'html') {
+      if (this.type.endsWith('markdown')) {
         result = md.render(fragData.toString());
       }
-    } else if (this.type == 'application/json' && value == 'text') {
-      result = JSON.parse(fragData);
-    } else if (value != 'md' && value == 'text') {
-      result = fragData;
     }
     return result;
   }
