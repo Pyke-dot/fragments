@@ -16,7 +16,9 @@ COPY ./src ./src
 # Copy the package.json and package-lock.json files into the working dir (/app)
 COPY package.json package-lock.json ./
 # Install node dependencies defined in package-lock.json
-RUN npm ci --only=production
+RUN npm ci --only=production && \
+    npm uninstall sharp && \
+    npm install --platform=linuxmusl sharp@0.30.3
 # Copy our HTPASSWD file
 COPY ./tests/.htpasswd ./tests/.htpasswd
 

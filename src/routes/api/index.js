@@ -27,13 +27,16 @@ const rawBody = () =>
 // Use a raw body parser for POST, which will give a `Buffer` Object or `{}` at `req.body`
 router.post('/fragments', rawBody(), require('./post'));
 
-// Define our first route, which will be: GET /v1/fragments
+// Define GET routes, which will be: GET /v1/fragments
 router.get('/fragments', get);
 router.get('/fragments/?expand', get);
 router.get('/fragments/:id/info', info);
 router.get('/fragments/:id', get_data);
-// Other routes will go here later on...
 
+// Define PUT route
+router.put('/fragments/:id', rawBody(), require('./put_data'));
+
+// Define DELETE route
 router.delete('/fragments/:id', require('./delete'));
 
 module.exports = router;

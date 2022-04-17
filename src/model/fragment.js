@@ -6,6 +6,7 @@ const logger = require('../logger');
 
 var MarkdownIt = require('markdown-it'),
   md = new MarkdownIt();
+const sharp = require('sharp');
 
 // Functions for working with fragment metadata/data using our DB
 const {
@@ -16,6 +17,18 @@ const {
   listFragments,
   deleteFragment,
 } = require('./data');
+
+const supportedTypes = [
+  'text/plain',
+  'text/plain; charset=utf-8',
+  'text/markdown',
+  'application/json',
+  'text/html',
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/gif',
+];
 
 class Fragment {
   constructor({ id, ownerId, created, updated, type, size = 0 }) {
@@ -63,7 +76,6 @@ class Fragment {
    * @returns Promise<Array<Fragment>>
    */
   static async byUser(ownerId, expand = false) {
-    // TODO
     try {
       const fragments = await listFragments(ownerId, expand);
       if (expand) {
@@ -138,8 +150,9 @@ class Fragment {
       throw new Error();
     } else {
       this.updated = new Date().toISOString();
-      this.size = data.toString().length;
-      return writeFragmentData(this.ownerId, this.id, data);
+      this.size = Buffer.byteLength(data);
+      await writeFragment(this);
+      return await writeFragmentData(this.ownerId, this.id, data);
     }
   }
 
@@ -158,9 +171,16 @@ class Fragment {
    * @returns {boolean} true if fragment's type is text/*
    */
   get isText() {
-    // TODO
     let result = this.mimeType.startsWith('text/');
+    return result;
+  }
 
+  /**
+   * Returns true if this fragment is a image/* mime type
+   * @returns {boolean} true if fragment's type is image/*
+   */
+  get isImage() {
+    let result = this.mimeType.startsWith('image/');
     return result;
   }
 
@@ -169,9 +189,24 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    // TODO
     let result = [];
-    result.push(this.mimeType);
+    if (
+      this.type.includes('image/png') ||
+      this.type.includes('image/jpeg') ||
+      this.type.includes('image/gif') ||
+      this.type.includes('image/webp')
+    ) {
+      result = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
+    } else if (this.type.includes('text/plain')) {
+      result = ['text/plain'];
+    } else if (this.type.includes('text/markdown')) {
+      result = ['text/plain', 'text/html', 'text/markdown'];
+    } else if (this.type.includes('text/html')) {
+      result = ['text/plain', 'text/html'];
+    } else if (this.type.includes('application/json')) {
+      result = ['application/json', 'text/plain'];
+    }
+    //return empty array if the type is not supported
     return result;
   }
 
@@ -181,12 +216,8 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    // TODO
     let result;
-
-    if (value == 'text/plain' || value == 'text/plain; charset=utf-8') {
-      result = true;
-    } else if (value == 'text/markdown' || value == 'application/json' || value == 'text/html') {
+    if (supportedTypes.includes(value)) {
       result = true;
     } else {
       result = false;
@@ -196,17 +227,49 @@ class Fragment {
 
   /**
    * Gets the fragment's data from the database
-   * @param {string} value a Content-Type value
+   * @param {string} value a convert type value
    * @returns result
    */
-  convert(value) {
-    var result;
-    if (value == '.html') {
+  async txtConvert(value) {
+    var result, fragData;
+    fragData = await this.getData();
+    if (value == 'html' && this.type != 'text/html') {
       if (this.type == 'text/markdown') {
-        result = md.render(this.getData().toString());
+        result = md.render(fragData.toString());
       }
+    } else if (this.type == 'application/json' && value == 'text') {
+      result = JSON.parse(fragData);
+    } else {
+      result = fragData;
     }
     return result;
+  }
+
+  async imgConvert(value) {
+    var result, fragData;
+    fragData = await this.getData();
+    if (value == 'gif') {
+      result = await sharp(fragData).gif();
+    } else if (value == 'jpg' || value == 'jpeg') {
+      result = await sharp(fragData).jpeg();
+    } else if (value == 'webp') {
+      result = await sharp(fragData).webp();
+    } else if (value == 'png') {
+      result = await sharp(fragData).png();
+    }
+    return result.toBuffer();
+  }
+
+  extConvert(value) {
+    var ext;
+    if (value == 'txt') {
+      ext = 'plain';
+    } else if (value == 'jpg') {
+      ext = 'jpeg';
+    } else {
+      ext = value;
+    }
+    return ext;
   }
 }
 module.exports.Fragment = Fragment;

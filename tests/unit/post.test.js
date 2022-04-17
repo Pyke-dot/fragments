@@ -54,5 +54,4 @@ describe('POST /v1/fragments', () => {
     expect(res.body.fragment).toEqual(fragment);
     expect(res.statusCode).toBe(201);
   });
-  // TODO: we'll need to add tests to check the contents of the fragments array later
 });

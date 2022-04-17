@@ -9,18 +9,14 @@ const logger = require('../../logger');
 let fragment;
 module.exports = {
   info: async (req, res) => {
-    if (req.query) {
-      if (req.params.id) {
-        try {
-          fragment = await Fragment.byId(req.user, req.params.id);
-          res.status(200).json(fragment);
-          logger.info({ fragmentInfo: fragment }, `successfully get fragment meta data`);
-        } catch (err) {
-          res
-            .status(404)
-            .json(createErrorResponse(404, 'unable to find fragment metadata with that id'));
-        }
-      }
+    try {
+      fragment = await Fragment.byId(req.user, req.params.id);
+      res.status(200).json(fragment);
+      logger.info({ fragmentInfo: fragment }, `successfully get fragment meta data`);
+    } catch (err) {
+      res
+        .status(404)
+        .json(createErrorResponse(404, 'unable to find fragment metadata with that id'));
     }
   },
 };
