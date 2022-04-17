@@ -228,6 +228,8 @@ class Fragment {
       }
     } else if (this.type == 'application/json' && value == 'text') {
       result = JSON.parse(fragData);
+    } else if (value == 'md' && this.type == 'text/markdown') {
+      result = fragData;
     } else if (value != 'md') {
       result = fragData;
     }
