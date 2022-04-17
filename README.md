@@ -36,3 +36,18 @@ This project is dockerized, image resides in Dockerhub: [teccayu/fragments](http
 OR simply run
 
 `docker pull teccayu/fragments:latest`
+
+#### Valid Fragment Conversions
+
+This is the current list of valid conversions for each fragment type (others may be added in the future):
+
+| Type               | Valid Conversion Extensions    |
+| ------------------ | ------------------------------ |
+| `text/plain`       | `.txt`                         |
+| `text/markdown`    | `.md`, `.html`, `.txt`         |
+| `text/html`        | `.html`, `.txt`                |
+| `application/json` | `.json`, `.txt`                |
+| `image/png`        | `.png`, `.jpg`, `.webp`, `gif` |
+| `image/jpeg`       | `.png`, `.jpg`, `.webp`, `gif` |
+| `image/webp`       | `.png`, `.jpg`, `.webp`, `gif` |
+| `image/gif`        | `.png`, `.jpg`, `.webp`, `gif` |
