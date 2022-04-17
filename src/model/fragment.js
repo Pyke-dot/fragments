@@ -228,9 +228,7 @@ class Fragment {
       }
     } else if (this.type == 'application/json' && value == 'text') {
       result = JSON.parse(fragData);
-    } else if (value == 'md' && this.type == 'text/markdown') {
-      result = fragData;
-    } else if (value != 'md') {
+    } else if (value != 'md' && value == 'text') {
       result = fragData;
     }
     return result;
@@ -257,6 +255,8 @@ class Fragment {
       ext = 'plain';
     } else if (value == 'jpg') {
       ext = 'jpeg';
+    } else if (value == 'md') {
+      ext = 'markdown';
     } else {
       ext = value;
     }
